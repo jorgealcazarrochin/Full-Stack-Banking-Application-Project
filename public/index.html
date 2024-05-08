@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Full Stack Banking App</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- bootstrap & bootstrap table css -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap-table/4.3.1/react-bootstrap-table-all.min.css"
+    integrity="sha512-g4W7wJRxZaaFx0lUNfcsYO4d/VQQLn506GW5SNV+SZqLaCIObIpXbiqyiA2ZDyKreZMbMsdCaQeJuil8dS55Wg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap-grid.min.css"
+    integrity="sha512-i1b/nzkVo97VN5WbEtaPebBG8REvjWeqNclJ6AItj7msdVcaveKrlIIByDpvjk5nwHjXkIqGZscVxOrTb9tsMA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- app css -->
+  <link rel="stylesheet" type="text/css" href="styles.css">
+
+  <!-- don't use this in production: -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+  <!-- we will put our react component inside this div -->
+  <div id="root"></div>
+
+  <!-- load react -->
+  <script src="https://unpkg.com/react/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-router@5/umd/react-router.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-router-dom@5/umd/react-router-dom.min.js" crossorigin></script>
+
+  <!-- load react bootstrap table-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap-table/4.3.1/react-bootstrap-table.min.js"
+    integrity="sha512-uftWh0O2mYBv72SDcCmdkUmeHf9QMebt4JUfYPm9JCkdCDNwLQRpX6KUTHlfxgdJoiKiTd1YkwGIBFpGR8DHEw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Incluir Bootstrap JS y jQuery (necesario para el funcionamiento del toggle) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
+    integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+  <!-- load firebase authentication -->
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
+
+  <!-- load our react components -->
+  <script src="context.js" defer type="text/babel"></script>
+  <script src="navbar.js" defer type="text/babel"></script>
+  <script src="createaccount.js" defer type="text/babel"></script>
+  <script src="login.js" defer type="text/babel"></script>
+  <script src="deposit.js" defer type="text/babel"></script>
+  <script src="withdraw.js" defer type="text/babel"></script>
+  <script src="balance.js" defer type="text/babel"></script>
+  <script src="alldata.js" defer type="text/babel"></script>
+  <script src="home.js" defer type="text/babel"></script>
+  <script src="index.js" defer type="text/babel"></script>
+
+  <script type="module">
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyC4Vu4a1sisQDC15qAd5j1nJCjmTavRqEY",
+      authDomain: "baking-app-b2158.firebaseapp.com",
+      projectId: "baking-app-b2158",
+      storageBucket: "baking-app-b2158.appspot.com",
+      messagingSenderId: "1047032127246",
+      appId: "1:1047032127246:web:1383df30d2d7e02c95815f"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+
+    // clear any existing log-in sessions
+    firebase.auth().signOut()
+
+    // firebase login state
+    firebase.auth().onAuthStateChanged((firebaseUser) => {
+      const loggedInStatus = document.getElementById('loggedInStatus');
+      const depositLink = document.getElementById('depositLink');
+      const withdrawLink = document.getElementById('withdrawLink');
+      const balanceLink = document.getElementById('balanceLink');
+      const createLink = document.getElementById('createLink');
+      const loginLink = document.getElementById('loginLink');
+      const logoutLink = document.getElementById('logoutLink');
+      const allDataLink = document.getElementById("allDataLink")
+      if (firebaseUser) {
+        loggedInStatus.innerText = firebaseUser.email;
+        createLink.style.display = "none";
+        loginLink.style.display = "none";
+        logoutLink.style.display = "inline-block";
+        depositLink.style.display = "inline-block";
+        withdrawLink.style.display = "inline-block";
+        balanceLink.style.display = "inline-block";
+        allDataLink.style.display = "inline-block";
+      } else {
+        loggedInStatus.innerText = "";
+        createLink.style.display = "inline-block";
+        loginLink.style.display = "inline-block";
+        logoutLink.style.display = "none";
+        depositLink.style.display = "none";
+        withdrawLink.style.display = "none";
+        balanceLink.style.display = "none";
+        allDataLink.style.display = "none";
+      }
+    });
+  </script>
+
+</body>
+
+</html>

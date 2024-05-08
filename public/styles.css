@@ -1,0 +1,26 @@
+.App {
+    text-align: center;
+  }
+  
+  .navbar-toggler {
+    align-self: flex-end;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  .btn-sumbit{
+    display: flex;
+  }
+
+  .btn-sign-in{
+    margin-right: 18px;
+  }
+
+  .create-account-form{
+    display: flex;
+    justify-content: center;
+  }
+
+  
