@@ -1,12 +1,20 @@
 const MongoClient = require("mongodb").MongoClient;
 // const url = "mongodb://localhost:27017";
 let db = null;
+// const url =
+//   "mongodb+srv://jorgedalcazar:secretPassword@cluster0.hk1j6yu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
 const url =
-  "mongodb+srv://jorgedalcazar:secretPassword@cluster0.hk1j6yu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+  "mongodb+srv://jorgedalcazar:secretPassword@cluster0.hk1j6yu.mongodb.net/myproject?retryWrites=true&w=majority&appName=Cluster0";
+
 // connect to mongo
 MongoClient.connect(url, { useUnifiedTopology: true }, function (err, client) {
+  if (err) {
+    console.error("Error connecting to database:", err);
+    return;
+  }
   console.log("Connected successfully to db server");
-  // connect to  database
+  // connect to database
   db = client.db("myproject");
 });
 
