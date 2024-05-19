@@ -1,12 +1,11 @@
-const UserContext = React.createContext(null);
 
 function Spa() {
   return (
     <HashRouter>
       <div>
-        <NavBar/>  
-        <UserContext.Provider value={{user:{}}}>
-          <div className="container" style={{padding: "20px"}}>
+        <NavBar />
+        <UserProvider>
+          <div className="container" style={{ padding: "20px" }}>
             <Route path="/" exact component={Home} />
             <Route path="/CreateAccount" component={CreateAccount} />
             <Route path="/login" component={Login} />
@@ -16,13 +15,10 @@ function Spa() {
             <Route path="/balance" component={Balance} />
             <Route path="/alldata" component={AllData} />
           </div>
-        </UserContext.Provider>
+        </UserProvider>
       </div>
     </HashRouter>
   );
 }
 
-ReactDOM.render(
-  <Spa/>,
-  document.getElementById('root')
-);
+ReactDOM.render(<Spa />, document.getElementById("root"));

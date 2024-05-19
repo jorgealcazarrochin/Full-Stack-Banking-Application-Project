@@ -1,7 +1,7 @@
 const { useState, useContext } = React;
 
 function CreateAccount() {
-  const ctx = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [show, setShow] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ function CreateAccount() {
         .createUserWithEmailAndPassword(email, password)
         .then((user) => {
           const userLogIn = firebase.auth().currentUser;
-          ctx.user.email = user.email;
+          setUser({ email: email });
           let uid = userLogIn.uid;
           // mongodb
           const url = `/account/create/${name}/${email}/${uid}`;
@@ -31,7 +31,7 @@ function CreateAccount() {
           let errorCode = error.code;
           let errorMessage = error.message;
           console.log("Error: " + errorCode + " " + errorMessage);
-          alert("Este correo ya esta registrado")
+          alert("Este correo ya esta registrado");
         });
     } else {
       setMessage("Por favor, llene de manera correcta el formulario");
@@ -61,7 +61,7 @@ function CreateAccount() {
               onChange={(e) => setName(e.currentTarget.value)}
             />
             <br />
-            Ingresa tu correo electrónico 
+            Ingresa tu correo electrónico
             <br />
             <input
               type="input"

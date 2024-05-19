@@ -2,6 +2,21 @@ const Route       = ReactRouterDOM.Route;
 const Link        = ReactRouterDOM.Link;
 const HashRouter  = ReactRouterDOM.HashRouter;
 
+const UserContext = React.createContext(null);
+
+const UserProvider = ({ children }) => {
+  const [user, setUser] = React.useState({ email: "" });
+
+  return (
+    <>
+      <UserContext.Provider value={{user, setUser}}>
+        {children}
+      </UserContext.Provider>
+    </>
+  );
+};
+
+
 function Card(props) {
   function classes() {
     const bg  = props.bgcolor ? ' bg-' + props.bgcolor : ' ';

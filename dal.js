@@ -1,11 +1,10 @@
 const MongoClient = require("mongodb").MongoClient;
+require('dotenv').config();
 // const url = "mongodb://localhost:27017";
 let db = null;
-// const url =
-//   "mongodb+srv://jorgedalcazar:secretPassword@cluster0.hk1j6yu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const url = process.env.MONGO_URL;
+console.log(url)
 
-const url =
-  "mongodb+srv://jorgedalcazar:secretPassword@cluster0.hk1j6yu.mongodb.net/myproject?retryWrites=true&w=majority&appName=Cluster0";
 
 // connect to mongo
 MongoClient.connect(url, { useUnifiedTopology: true }, function (err, client) {
@@ -15,6 +14,7 @@ MongoClient.connect(url, { useUnifiedTopology: true }, function (err, client) {
   }
   console.log("Connected successfully to db server");
   // connect to database
+  
   db = client.db("myproject");
 });
 

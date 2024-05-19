@@ -4,9 +4,11 @@ function Deposit() {
   const [show, setShow] = useState(true);
   const [status, setStatus] = useState("");
   const ctx = useContext(UserContext);
+  console.log(ctx)
 
   useEffect(() => {
     const email = ctx.user.email;
+    console.log("Email", email)
     fetch(`/account/findOne/${email}`)
       .then((response) => response.text())
       .then((text) => {
@@ -15,8 +17,8 @@ function Deposit() {
           setBalance(data.balance);
           console.log("JSON:", data);
         } catch (err) {
-          setStatus(text);
-          console.log("err:", text);
+          setStatus(err);
+          console.log("err:", err);
         }
       });
   }, [ctx.user.email]);
@@ -58,7 +60,7 @@ function Deposit() {
         body={
           show ? (
             <>
-              <h5>Actual balance: ${parseFloat(balance)}</h5>
+              <h5>Actual balance: ${parseFloat(balance).toFixed(2)}</h5>
               Cantidad de deposito
               <br />
               <input

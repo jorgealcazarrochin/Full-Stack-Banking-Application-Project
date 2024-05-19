@@ -3,6 +3,7 @@ const { useState, useContext, useEffect } = React;
 function Balance() {
   const ctx = useContext(UserContext);
   const [balance, setBalance] = useState(0);
+  console.log(ctx)
 
   useEffect(() => {
     const email = ctx.user.email;
